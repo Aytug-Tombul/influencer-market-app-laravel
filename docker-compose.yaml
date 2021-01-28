@@ -1,0 +1,55 @@
+# For more information: https://laravel.com/docs/sail
+version: "3.7"
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      DB_HOST: db
+      DB_DATABASE: influencer
+      DB_USERNAME: root
+      DB_PASSWORD: null
+    ports:
+      - 8000:8000
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+    networks:
+    - app
+
+  db:
+    image: mysql:5.7.22
+    environment: 
+      MYSQL_DATABASE: influencer
+      MYSQL_USER: root
+      MYSQL_PASSWORD: null
+      MYSQL_ROOT_PASSWORD: null
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes: 
+    - .dbdata:/var/lib/mysql
+    ports: 
+    - 33066:3306
+    networks: 
+    - app
+
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin_2
+    environment:
+     PMA_HOST: db
+     PMA_USER: root
+     PMA_PASSWORD: null
+    ports:
+     - 8080:80
+    volumes:
+     - /sessions
+     - ~/docker/phpmyadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php
+     - /custom/phpmyadmin/theme/:/www/themes/theme/
+    networks: 
+    - app
+
+networks:
+  app:
