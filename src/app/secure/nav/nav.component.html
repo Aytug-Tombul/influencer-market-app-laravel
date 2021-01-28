@@ -1,0 +1,8 @@
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Influencer</a>
+    
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a class="p-2 text-white" routerLink="/profile"> {{user?.first_name}} {{user?.last_name}} </a>
+        <a class="p-2 text-white" href="javascript:void(0)"  (click)="logout()">Sign out</a>
+      </nav>
+  </nav>
